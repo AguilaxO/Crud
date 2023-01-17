@@ -28,21 +28,39 @@ const crearElemento = (nombre, email) => {
 
 const tabla = document.querySelector("[data-table]");
 
-
-const htpp = new XMLHttpRequest();
-
 // CRUD     - Métodos
 // create   - POST
 // red      - GET
 // update   - PUT, PATCH
 // delete   - DELETE
 
-htpp.open("GET", "http://localhost:3000/perfil");
-htpp.send();
+const listaClientes = () => {
+  const promesa = new Promise((resolve, reject) => {
+    const htpp = new XMLHttpRequest();
+    htpp.open("GET", "http://localhost:3000/perfil");
+    htpp.send();
 
-htpp.onload = () => {
-    const datos = JSON.parse(htpp.response);
-    datos.forEach(perfil => {
-        tabla.appendChild(crearElemento(perfil.nombre, perfil.email));
-    });
+    htpp.onload = () => {
+    const respuesta = JSON.parse(htpp.response);
+    if(htpp.status > 400) {
+      reject(respuesta);
+    }
+    else {
+      resolve(respuesta);
+    }
+    }
+  })
+
+  return promesa;
 }
+
+listaClientes().then((clientes) => {
+  clientes.forEach(perfil => {
+    tabla.appendChild(crearElemento(perfil.nombre, perfil.email));
+  });
+  
+}).catch((error) => {
+  alert("Ocurrio un error");
+})
+
+
