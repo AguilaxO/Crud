@@ -34,25 +34,7 @@ const tabla = document.querySelector("[data-table]");
 // update   - PUT, PATCH
 // delete   - DELETE
 
-const listaClientes = () => {
-  const promesa = new Promise((resolve, reject) => {
-    const htpp = new XMLHttpRequest();
-    htpp.open("GET", "http://localhost:3000/perfil");
-    htpp.send();
-
-    htpp.onload = () => {
-    const respuesta = JSON.parse(htpp.response);
-    if(htpp.status > 400) {
-      reject(respuesta);
-    }
-    else {
-      resolve(respuesta);
-    }
-    }
-  })
-
-  return promesa;
-}
+const listaClientes = () => fetch("http://localhost:3000/perfil").then(respuesta => respuesta.json());
 
 listaClientes().then((clientes) => {
   clientes.forEach(perfil => {
