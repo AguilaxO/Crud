@@ -35,7 +35,7 @@ const actualizarCliente = (nombre, email, id) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({nombre, email})
-  }).then(respuesta => console.log(respuesta)).catch((error) => console.log(error))
+  }).then(respuesta => respuesta).catch((error) => console.log(error))
 }
 export const servicioClientes = {
   listaClientes,
