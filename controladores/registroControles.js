@@ -7,7 +7,7 @@ formulario.addEventListener("submit", (evento) => {
     const nombre = document.querySelector("[data-nombre]").value;
     const email = document.querySelector("[data-email]").value;
     servicioClientes.crearCliente(nombre, email).then( respuesta => {
-        console.log(respuesta);
+        window.location.href = "/screens/registro_completado.html"
     }).catch(error => {
         console.log(error);
     });
